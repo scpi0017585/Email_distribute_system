@@ -123,19 +123,7 @@ public class Controller {
 	    		exists = false;
 	    		
 	    		if(!senders.isEmpty()&&!recipients.isEmpty()&& flag == false) {
-	    			
-	    			
-	    			
-	    			/*
-	    			for(int index = 0; index < senders.size(); index++) {
-	    				
-	    				for(int j = 0; j < recipients.size(); j++) {
-	    					if( (((Recipient) recipients.get(j)).search(((Sender) senders.get(index)).groups) == true )) {
-	    						System.out.println(((Recipient) recipients.get(j)).get_name() + " received email from " + ((Sender) senders.get(index)).get_name() + " " + meassage );
-	    					}
-	    				}
-	    			}
-	    			*/
+	    		
 	    			for(int index = 0; index < recipients.size();index++) {
 	    				if( (((Recipient) recipients.get(index)).search(group) == true )) {
 	    					for(int j = 0; j < senders.size(); j++) {
