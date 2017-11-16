@@ -15,6 +15,7 @@ public class Recipient implements IRecipient {
 	  if(subscribe_groups.isEmpty()) {
 		  subscribe_groups.add(group);
 	  }
+	  else {
 	 for (int index = 0; index < subscribe_groups.size(); index++) {
 	  if(subscribe_groups.get(index).equals(group)) {
 	   exists = true;
@@ -22,10 +23,11 @@ public class Recipient implements IRecipient {
 	   System.out.println("you already subscribe " + group + " group ");
 	    }
 	 }
-	 if(exists == false && !subscribe_groups.isEmpty()) {
+	 if(exists == false) {
 		 subscribe_groups.add(group);
 	 }
-	 exists = false;
+	 }
+	  exists = false;
   }
   
   public void unsubscribe(String group) {
@@ -41,6 +43,7 @@ public class Recipient implements IRecipient {
 		  System.out.println("no subscribe group found!");
 	  }
   }
+  
   public boolean search(String group) {
 	  if(!subscribe_groups.isEmpty()) {
 		  for (int index = 0; index < subscribe_groups.size(); index++) {
@@ -52,7 +55,21 @@ public class Recipient implements IRecipient {
 	  return false;
 	  
   }
+  
   public String get_name() {
 	 return recipient;
   }
+public boolean search(ArrayList<String> groups) {
+	// TODO Auto-generated method stub
+	if(!subscribe_groups.isEmpty()) {
+	   for(int i = 0; i < subscribe_groups.size(); i++ ) {
+		   for(int j = 0; j < groups.size(); j++) {
+			   if(subscribe_groups.get(i).equals(groups.get(j))) {
+				   return true;
+			   }
+		   }
+	   }
+	}
+	return false;
+}
 }

@@ -1,7 +1,6 @@
 import java.util.*;
 public class Controller {
 	public static void main(String[] args){
-		Scanner scanner = new Scanner(System.in);
 		View view = new View();
 		//System.out.println(view.preload());
 	    String command;
@@ -10,13 +9,15 @@ public class Controller {
 	    String input;
 	    String meassage;
 	    boolean exists = false;
+	    boolean flag = false;
 	    int i = 0;
 	    input = view.preload();
 	    String[] array1 = new String[300];
 	    array1 = input.split(",");
-	    ArrayList<Object> all_groups = new ArrayList<Object>();
+	    ArrayList<Object> senders = new ArrayList<Object>();
 	    ArrayList<Object> recipients = new ArrayList<Object>();
-	    
+	    ArrayList<String> all_groups = new ArrayList<String>();
+ 	    
 	    while (array1.length != i) {
 	    	command = array1[i];
 	        System.out.println(command);
@@ -27,24 +28,30 @@ public class Controller {
 	    		group = array1[i+2];
 	    		//do something
 	    		i = i + 3;
-	    		if (all_groups.isEmpty()) {
-	    			System.out.println("error 2, no registed groups");
-	    		}
-	    		if (!all_groups.isEmpty()) {
-	    			for(int index = 0; index < all_groups.size(); index++) {
-	    				if((((Sender) all_groups.get(index)).get_group()).equals(group)) {
-	    					exists = true;
-	    				}
-	    			}
-	    		if(exists == true) {
+	    		if (recipients.isEmpty()) {
 	    			Recipient recipient = new Recipient(name, group);
 	    			recipient.subscribe(group);
 	    			recipients.add(recipient);
-	    			
+	    			//test
+	    			System.out.println("The " + name + " on the list now ");
 	    		}
-	    	  }
-	    	  exists = false;
-	    		
+	    		else {
+	    		if(!recipients.isEmpty()) {
+	    			for(int index = 0; index < recipients.size();index++) {
+	    				if((((Recipient) recipients.get(index)).get_name()).equals(name)) {
+	    					((Recipient) recipients.get(index)).subscribe(group);
+	    					exists = true;
+	    				}
+	    			}
+	    		}
+	    		if(exists == false) {
+	    			Recipient recipient = new Recipient(name, group);
+	    			recipient.subscribe(group);
+	    			recipients.add(recipient);
+	    			System.out.println("The " + name + " on the list now ");
+	    		}
+	    		exists = false;
+	    	 }
 	    	}
 	    	else if (command.equals("Register")|| command.equals("register")) {
 	    		
@@ -53,21 +60,25 @@ public class Controller {
 	    		group = array1[i+2];
 	    		//do something
 	    		i = i + 3;
-	    		if(all_groups.isEmpty()) {
+	    		if(senders.isEmpty()) {
 	    		Sender sender = new Sender(name,group);
 	    		sender.register(group);
-	    		all_groups.add(sender);
+	    		all_groups.add(group);
+	    		senders.add(sender);
 	    		}
 	    		else {
-	    			for(int index = 0; index < all_groups.size(); index++) {
-	    				if((((Sender) all_groups.get(index)).get_group()).equals(group)) {
-	    				  exists = true;
+	    			for(int index = 0; index < senders.size(); index++) {
+	    				if((((Sender) senders.get(index)).get_name()).equals(name)) {
+	    					((Sender) senders.get(index)).register(group);
+	    					all_groups.add(group);
+	    					exists = true;
 	    				}
 	    			}
 	    			if(exists == false ) {
 	    				Sender sender = new Sender(name,group);
 	    	    		sender.register(group);
-	    	    		all_groups.add(sender);
+	    	    		all_groups.add(group);
+	    	    		senders.add(sender);
 	    			}
 	    		}
 	    		exists = false;
@@ -100,15 +111,43 @@ public class Controller {
 	    		meassage = array1[i+3];
 	    		//do something
 	    		i = i + 4;
-	    		if(!all_groups.isEmpty()&&!recipients.isEmpty()) {
-	    			for(int index = 0; index < all_groups.size(); index++) {
+	    		for (int index = 0; index < all_groups.size(); index++) {
+	    			if(all_groups.get(index).equals(group)) {
+	    				exists = true;
+	    			}
+	    		}
+	    		if(exists == false ) {
+	    			System.out.println("Unauthorized publication by " + name);
+	    			flag = true;
+	    		}
+	    		exists = false;
+	    		
+	    		if(!senders.isEmpty()&&!recipients.isEmpty()&& flag == false) {
+	    			
+	    			
+	    			
+	    			/*
+	    			for(int index = 0; index < senders.size(); index++) {
+	    				
 	    				for(int j = 0; j < recipients.size(); j++) {
-	    					if( (((Recipient) recipients.get(j)).search(((Sender) all_groups.get(index)).get_group()) == true )) {
-	    						System.out.println(((Recipient) recipients.get(j)).get_name() + " received email from " + ((Sender) all_groups.get(index)).get_name() + " " + meassage );
+	    					if( (((Recipient) recipients.get(j)).search(((Sender) senders.get(index)).groups) == true )) {
+	    						System.out.println(((Recipient) recipients.get(j)).get_name() + " received email from " + ((Sender) senders.get(index)).get_name() + " " + meassage );
+	    					}
+	    				}
+	    			}
+	    			*/
+	    			for(int index = 0; index < recipients.size();index++) {
+	    				if( (((Recipient) recipients.get(index)).search(group) == true )) {
+	    					for(int j = 0; j < senders.size(); j++) {
+	    						if((((Sender) senders.get(j)).get_name()).equals(name)) {
+	    							System.out.print(((Recipient) recipients.get(index)).get_name());
+	    							((Sender)senders.get(j)).send_email(group,meassage);
+	    						}
 	    					}
 	    				}
 	    			}
 	    		}
+	    		flag = false;
 	    	}
 	    	else {
 	    		System.out.println(command);
@@ -117,5 +156,5 @@ public class Controller {
 	    	}
 	    }
 	    
-		 }
+	}
 }

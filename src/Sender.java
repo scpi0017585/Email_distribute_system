@@ -6,7 +6,6 @@ public class Sender implements ISender {
 	String group;
 	boolean exists = false;
 	ArrayList<String> groups = new ArrayList<String>();
-	ArrayList<String> meassage = new ArrayList<String>();
 	 public Sender(String sender, String group) {
 		 this.sender = sender;
 		 this.group = group;
@@ -16,6 +15,7 @@ public class Sender implements ISender {
 			   groups.add(group);
 			   System.out.println("group: "+ group + "\tregisted! ");
 		 }
+		 else {
 	     for(int index = 0; index < groups.size(); index++) {
 	    	 if(groups.get(index).equals(group)) {
 	    		 exists = true;
@@ -25,27 +25,35 @@ public class Sender implements ISender {
 	    	 groups.add(group);
 	    	 System.out.println("group: "+ group + "\tregisted! ");
 	     }
-	     exists = false;
+		 }
+		 exists = false;
 	 }
 	   
 	   public void send_email(String group,String text) {
-		  if(!groups.isEmpty()) {
-			  for(int index = 0; index < groups.size(); index++) {
-			    	 if(groups.get(index).equals(group)) {
-			    		meassage.add(group);
-			    		meassage.add(text);
-			    	 }
-			  }
+		   for(int index = 0; index < groups.size(); index++) {
+			   if(groups.get(index).equals(group)) {
+				   exists = true;
+			   }
+		   }
+		  if(!groups.isEmpty() && exists == true) {
+			  System.out.print(" received email from " + sender + " " + text + "\n");
 	      }
 		  //test
 		  else {
-			  System.out.println("send_email, no subscribe group found");
+			  System.out.println("in send_email, no subscribe group found");
 		  }
+		  exists = false;
 	 }
 	   public String get_name() {
 		   return sender;
 	   }
-	   public String get_group() {
-		   return group;
+	   public boolean search_group(String group) {
+		   for(int index = 0; index < groups.size(); index++) {
+		    	 if(groups.get(index).equals(group)) {
+		    		return true;
+		    	 }
+		    
 	   }
+		   return false;
+}
 }
