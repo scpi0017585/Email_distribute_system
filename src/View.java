@@ -1,7 +1,7 @@
 /*
    * View.java
    *
-   * This class reload the input.txt, and takes inputs from stdin redirecting the input to file.
+   * This class load the input.txt.
    *
 
 */
