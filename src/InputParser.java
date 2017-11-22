@@ -23,6 +23,8 @@
 	private boolean flag;
 
 	private int i;
+	
+	private exists2;
 
 	private ArrayList<object> recipients;
 
@@ -58,12 +60,14 @@ public class InputParser {
 	    String input;
 	    String message;
 	    boolean exists = false;
+	    boolean exists2 = false;
 	    boolean flag = false;
 	    int i = 0;
 	    String[] array1 = new String[300];
 	    ArrayList<Object> senders = new ArrayList<Object>();
 	    ArrayList<Object> recipients = new ArrayList<Object>();
 	    ArrayList<String> all_groups = new ArrayList<String>();
+	    ArrayList<String> all_senders = new ArrayList<String>();
 	 
 	   /**
 	    *  Constructor          
@@ -142,6 +146,7 @@ public class InputParser {
 	    				Sender sender = new Sender(name,group);
 	    	    		sender.register(group);
 	    	    		all_groups.add(group);
+	    	    		all_senders.add(name);
 	    	    		senders.add(sender);
 	    			}
 	    		}
@@ -182,11 +187,17 @@ public class InputParser {
 	    				exists = true;
 	    			}
 	    		}
-	    		if(exists == false ) {
+	    		for (int index = 0; index < all_senders.size(); index++) {
+	    			if(all_senders.get(index).equalsIgnoreCase(name)) {
+	    				exists2 = true;
+	    			}
+	    		}
+	    		if(exists == false || exists2 == false) {
 	    			System.out.println("Unauthorized publication by " + name);
 	    			flag = true;
 	    		}
 	    		exists = false;
+	    		exists2 = false;
 	    		
 	    		if(!senders.isEmpty()&&!recipients.isEmpty()&& flag == false) {
 	    		
