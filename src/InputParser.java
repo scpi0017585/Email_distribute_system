@@ -21,14 +21,14 @@
 	private boolean exists;
 
 	private boolean flag;
+	
+	private boolean not_exists;
 
 	private int i;
-	
-	private exists2;
 
 	private ArrayList<object> recipients;
 
-	private ArrayList<object> Sebders;
+	private ArrayList<object> Senders;
 
 	private ArrayList<String> all_groups;
 
@@ -60,6 +60,7 @@ public class InputParser {
 	    String input;
 	    String message;
 	    boolean exists = false;
+	    boolean not_exists = true;
 	    boolean flag = false;
 	    int i = 0;
 	    String[] array1 = new String[300];
@@ -179,16 +180,26 @@ public class InputParser {
 	    		group = array1[i+2];
 	    		message = array1[i+3];
 	    		i = i + 4;
-	    		for (int index = 0; index < all_groups.size(); index++) {
-	    			if(all_groups.get(index).equalsIgnoreCase(group)) {
+	    		for (int index = 0; index < senders.size(); index++) {
+	    			if(((Sender)senders.get(index)).group.equalsIgnoreCase(group)) {
 	    				exists = true;
 	    			}
+	    			if(((Sender)senders.get(index)).get_name().equalsIgnoreCase(name)) {
+	    				not_exists = false;
+	    			}
 	    		}
+	    		
 	    		if(exists == false) {
 	    			System.out.println("Unauthorized publication by " + name);
 	    			flag = true;
 	    		}
+	    		else if (not_exists == true)
+	    		{
+	    			System.out.println("Unauthorized publication by " + name);
+	    			flag = true;
+	    		}
 	    		exists = false;
+	    		not_exists = true;
 	    		
 	    		if(!senders.isEmpty()&&!recipients.isEmpty()&& flag == false) {
 	    		
