@@ -1,13 +1,46 @@
 /*
    * Sender.java
-   *
+   * posting id:1204-446
    * Sender class implements ISender interface, It have arrayList groups that store register group read from
    * input.txt in Controller class. 
    *
 
 */
+//begin
+/*
+ public class Sender implements ISender {
 
+	private String sender;
 
+	private String group;
+
+	private boolean exists;
+
+	private ArrayList<String> groups;
+
+	public Sender(String sender, String group) {
+
+	}
+
+	public void register(String group) {
+
+	}
+
+	public void send_email(String group, String text) {
+
+	}
+
+	public String get_name() {
+		return null;
+	}
+
+	public boolean search_group(String group) {
+		return false;
+	}
+
+}
+ */
+//end
 import java.util.*;
 public class Sender implements ISender {
 	

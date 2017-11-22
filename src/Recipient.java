@@ -1,13 +1,48 @@
 /*
    * Recipient.java
    *
+   *posting id:1204-446
    * Recipient implements IRecipient interface, It have arrayList subscribe_groups that store subscribed groups read from
    * input.txt in Controller class. 
    *
-
 */
+//begin
+/*
+public class Recipient implements IRecipient {
 
+	private String recipient;
 
+	private String group;
+
+	private boolean exists;
+
+	private ArrayList<String> subscribe_groups;
+
+	private ArrayList<String> message;
+
+	public Recipient(String recipient, String group) {
+
+	}
+
+	public void subscribe(String group) {
+
+	}
+
+	public void unsubscribe(String group) {
+
+	}
+
+	public boolean search(String group) {
+		return false;
+	}
+
+	public String get_name() {
+		return null;
+	}
+
+}
+ */
+//end
 import java.util.*;
 
 public class Recipient implements IRecipient {
@@ -57,7 +92,7 @@ public class Recipient implements IRecipient {
   public boolean search(String group) {
 	  if(!subscribe_groups.isEmpty()) {
 		  for (int index = 0; index < subscribe_groups.size(); index++) {
-			  if(subscribe_groups.get(index).equals(group)) {
+			  if(subscribe_groups.get(index).equalsIgnoreCase(group)) {
 				  return true;
 			  }
 		  }
